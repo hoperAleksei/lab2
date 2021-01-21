@@ -99,66 +99,65 @@ void globalSearch(int n, int *const *arr, int toFind)
 		int* diagonal = new int[k];
 		if (i == 0)
 		{
-			cout << "Главная диагональ: ";
+			cout << "Побочная диагональ: ";
 			for (int j = 0; j < k; j++)
 			{
-				diagonal[j] = arr[j][j];
+				diagonal[j] = arr[j][n-j-1];
 				cout << diagonal[j] << " ";
 			}
 			cout << endl;
 			if (!isSorted(diagonal, k))
 			{
-				cout << "Последовательность не отсортированна для интерполяционного поиска." << endl;
+				cout << "Последовательность не отсортированна для поиска." << endl;
 			}
 			else
 			{
 				int index = interpolationSearch(diagonal, toFind, k);
 				cout << "Интерполяционный поиск: " << index << endl;
+				index = binarySearch(diagonal, toFind, k);
+				cout << "Бинарный поиск: " << index << endl;
 			}
-			int index = binarySearch(diagonal, toFind, k);
-			cout << "Линейный поиск: " << index << endl;
 			
 		}
 		else
 		{
-			cout << i << "ая диагональ выше главной: ";
+			cout << '+' << i << " диагональ: ";
 			for (int j = 0; j < k; ++j) {
-				diagonal[j] = arr[j][j + i];
+				diagonal[j] = arr[j][n-1-j-i];
 				cout << diagonal[j] << " ";
 			}
 			cout << endl;
 			if (!isSorted(diagonal, k))
 			{
-				cout << "Последовательность не отсортированна для интерполяционного поиска." << endl;
+				cout << "Последовательность не отсортированна для поиска." << endl;
 			}
 			else
 			{
 				int index = interpolationSearch(diagonal, toFind, k);
 				cout << "Интерполяционный поиск: " << index << endl;
+				index = binarySearch(diagonal, toFind, k);
+				cout << "Бинарный поиск: " << index << endl;
 			}
-			int index = binarySearch(diagonal, toFind, k);
-			cout << "Линейный поиск: " << index << endl;
 			
-			
-			cout << i << "ая диагональ ниже главной: ";
+			cout << '-' << i << " диагональ: ";
 			for (int j = 0; j < k; ++j) {
-				diagonal[j] = arr[j + i][j];
+				diagonal[j] = arr[j + i][n-1-j];
 				cout << diagonal[j] << " ";
 			}
 			cout << endl;
 			if (!isSorted(diagonal, k))
 			{
-				cout << "Последовательность не отсортированна для интерполяционного поиска." << endl;
+				cout << "Последовательность не отсортированна для поиска." << endl;
 			}
 			else
 			{
 				int index = interpolationSearch(diagonal, toFind, k);
 				cout << "Интерполяционный поиск: " << index << endl;
+				index = binarySearch(diagonal, toFind, k);
+				cout << "Бинарный поиск: " << index << endl;
 			}
-			index = binarySearch(diagonal, toFind, k);
-			cout << "Линейный поиск: " << index << endl;
 		}
-		
+		cout << endl;
 		
 	}
 }
@@ -198,6 +197,12 @@ int main()
 	{
 		const int n = 10;
 		int **arr = new int*[n];
+		
+		/*
+		 * ЗАПОЛНЕНИЕ МАТРИЦЫ ДЛЯ ТЕСТА
+		 *
+		 *
+		 * */
 		for (int i = 0; i < n; ++i)
 		{
 			arr[i] = new int[n];
@@ -206,6 +211,8 @@ int main()
 				arr[i][j] = i + j;
 			}
 		}
+		
+		
 		cout << "Матрица: " << endl;
 		printMx(arr, n);
 		
