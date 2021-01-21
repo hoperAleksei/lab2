@@ -2,15 +2,12 @@
 
 using namespace std;
 
-int binarySearch(int* mArray, int find_el, int size)
+int binarySearch(int const* mArray, int find_el, int size)
 {
-	
-	
-	
 	int l = 0;
 	int k = size;
 	
-	int i = 0;
+	int i;
 	
 	while (l <= k)
 	{
@@ -35,7 +32,7 @@ int binarySearch(int* mArray, int find_el, int size)
 
 
 
-int interpolationSearch(int *sortedArray, int toFind, int length)
+int interpolationSearch(int const* sortedArray, int toFind, int length)
 {
 	int mid;
 	int low = 0;
@@ -71,14 +68,10 @@ int interpolationSearch(int *sortedArray, int toFind, int length)
 		return low;
 	}
 	
-	
-	
 	return -1;
 }
 
-
-
-bool isSorted(int* arr, int n)
+bool isSorted(int const* arr, int n)
 {
 	for (int i = 1; i < n; i++)
 	{
@@ -112,12 +105,9 @@ void globalSearch(int n, int *const *arr, int toFind)
 			}
 			else
 			{
-				int index = interpolationSearch(diagonal, toFind, k);
-				cout << "Интерполяционный поиск: " << index << endl;
-				index = binarySearch(diagonal, toFind, k);
-				cout << "Бинарный поиск: " << index << endl;
+				cout << "Интерполяционный поиск: " << interpolationSearch(diagonal, toFind, k) << endl;
+				cout << "Бинарный поиск: " << binarySearch(diagonal, toFind, k) << endl;
 			}
-			
 		}
 		else
 		{
@@ -133,10 +123,8 @@ void globalSearch(int n, int *const *arr, int toFind)
 			}
 			else
 			{
-				int index = interpolationSearch(diagonal, toFind, k);
-				cout << "Интерполяционный поиск: " << index << endl;
-				index = binarySearch(diagonal, toFind, k);
-				cout << "Бинарный поиск: " << index << endl;
+				cout << "Интерполяционный поиск: " << interpolationSearch(diagonal, toFind, k) << endl;
+				cout << "Бинарный поиск: " << binarySearch(diagonal, toFind, k) << endl;
 			}
 			
 			cout << '-' << i << " диагональ: ";
@@ -151,14 +139,11 @@ void globalSearch(int n, int *const *arr, int toFind)
 			}
 			else
 			{
-				int index = interpolationSearch(diagonal, toFind, k);
-				cout << "Интерполяционный поиск: " << index << endl;
-				index = binarySearch(diagonal, toFind, k);
-				cout << "Бинарный поиск: " << index << endl;
+				cout << "Интерполяционный поиск: " << interpolationSearch(diagonal, toFind, k) << endl;
+				cout << "Бинарный поиск: " << binarySearch(diagonal, toFind, k) << endl;
 			}
 		}
 		cout << endl;
-		
 	}
 }
 
@@ -180,7 +165,7 @@ int main()
 	int enter;
 	while (ind)
 	{
-		cout << "Если хотите ввести матрицу сами введите 1, если хотите запустить тестирование введите 0: ";
+		cout << "Если хотите ввести матрицу сами, то введите 1, а если хотите запустить тестирование введите 0: ";
 		cin >> enter;
 		
 		if (((enter == 0) or (enter == 1)))
@@ -201,24 +186,27 @@ int main()
 		/*
 		 * ЗАПОЛНЕНИЕ МАТРИЦЫ ДЛЯ ТЕСТА
 		 *
+		 * todo
 		 *
 		 * */
+		
 		for (int i = 0; i < n; ++i)
 		{
 			arr[i] = new int[n];
 			for (int j = 0; j < n; ++j)
 			{
-				arr[i][j] = i + j;
+				arr[i][j] = 2*i + j;
 			}
 		}
 		
 		
 		cout << "Матрица: " << endl;
 		printMx(arr, n);
+		const int a = 11;
 		
-		cout << "Ищем 5: " << endl;
+		cout << "Ищем " << a << ": " << endl;
 		
-		globalSearch(n, arr, 5);
+		globalSearch(n, arr, a);
 		
 	}
 	
@@ -226,8 +214,9 @@ int main()
 	if (enter == 1)
 	{
 		int n;
-		cout << "Введите размерность матрицы ";
+		int a;
 		
+		cout << "Введите размерность матрицы ";
 		cin >> n;
 		
 		if (n == 0)
@@ -252,10 +241,8 @@ int main()
 		}
 		
 		cout << "Введенная матрица: " << endl;
-		
 		printMx(arr, n);
 		
-		int a;
 		cout << "Введите искомое число: ";
 		cin >> a;
 		globalSearch(n, arr, a);
