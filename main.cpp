@@ -2,8 +2,26 @@
 
 using namespace std;
 
+
+
+bool isSorted(int const* arr, int n)
+{
+	for (int i = 1; i < n; i++)
+	{
+		if (arr[i] < arr[i - 1])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 int binarySearch(int const* mArray, int find_el, int size)
 {
+	if (!isSorted(mArray, size))
+	{
+		return -2;
+	}
 	int l = 0;
 	int k = size;
 	
@@ -32,24 +50,28 @@ int binarySearch(int const* mArray, int find_el, int size)
 
 
 
-int interpolationSearch(int const* sortedArray, int toFind, int length)
+int interpolationSearch(int const* mArray, int toFind, int size)
 {
+	if (!isSorted(mArray, size))
+	{
+		return -2;
+	}
 	int mid;
 	int low = 0;
-	int high = length - 1;
-	while (sortedArray[low] < toFind && sortedArray[high] > toFind)
+	int high = size - 1;
+	while (mArray[low] < toFind && mArray[high] > toFind)
 	{
-		if (sortedArray[low] == sortedArray[high])
+		if (mArray[low] == mArray[high])
 		{
 			break;
 		}
-		mid = low + ((toFind - sortedArray[low]) * (high - low)) / (sortedArray[high] - sortedArray[low]);
+		mid = low + ((toFind - mArray[low]) * (high - low)) / (mArray[high] - mArray[low]);
 		
-		if (sortedArray[mid] < toFind)
+		if (mArray[mid] < toFind)
 		{
 			low = mid + 1;
 		}
-		else if (sortedArray[mid] > toFind)
+		else if (mArray[mid] > toFind)
 		{
 			high = mid - 1;
 		}
@@ -59,11 +81,11 @@ int interpolationSearch(int const* sortedArray, int toFind, int length)
 		}
 	}
 	
-	if (sortedArray[high] == toFind)
+	if (mArray[high] == toFind)
 	{
 		return high;
 	}
-	if (sortedArray[low] == toFind)
+	if (mArray[low] == toFind)
 	{
 		return low;
 	}
@@ -71,17 +93,6 @@ int interpolationSearch(int const* sortedArray, int toFind, int length)
 	return -1;
 }
 
-bool isSorted(int const* arr, int n)
-{
-	for (int i = 1; i < n; i++)
-	{
-		if (arr[i] < arr[i - 1])
-		{
-			return false;
-		}
-	}
-	return true;
-}
 
 void globalSearch(int n, int *const *arr, int toFind)
 {
